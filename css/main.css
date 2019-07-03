@@ -452,7 +452,7 @@ body {
 }
 @media (min-width: 1200px) {
   .container .header-inner {
-    width: 800px;
+    width: 1200px;
   }
 }
 @media (min-width: 1600px) {
@@ -466,7 +466,7 @@ body {
 }
 @media (min-width: 1200px) {
   .container .main-inner {
-    width: 800px;
+    width: 1200px;
   }
 }
 @media (min-width: 1600px) {
@@ -484,7 +484,7 @@ body {
 }
 @media (min-width: 1200px) {
   .container .footer-inner {
-    width: 800px;
+    width: 1200px;
   }
 }
 @media (min-width: 1600px) {
@@ -1764,7 +1764,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff7e59;
+  background: #d46100;
 }
 .feed-link,
 .chat {
