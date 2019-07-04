@@ -348,7 +348,7 @@
                 
               
 
-              <time title="Created: 2019-07-04 22:10:34 / Modified: 22:56:06" itemprop="dateCreated datePublished" datetime="2019-07-04T22:10:34+08:00">2019-07-04</time>
+              <time title="Created: 2019-07-04 22:10:34 / Modified: 23:16:43" itemprop="dateCreated datePublished" datetime="2019-07-04T22:10:34+08:00">2019-07-04</time>
             
 
             
@@ -390,12 +390,9 @@
         
           
             <h1 id="flink-源码解读之-SocketWindowWordCount"><a href="#flink-源码解读之-SocketWindowWordCount" class="headerlink" title="flink 源码解读之 SocketWindowWordCount"></a>flink 源码解读之 SocketWindowWordCount</h1><p>#大数据</p>
-<ol>
-<li>源码位置在flink 项目中，可以单独去git 上下载，git 地址，参考上一篇文章<br>link-examples_flink-examples-streaming_src_main_java_org_apache_flink_streaming_examples_socket/SocketWindowWordCount.java</li>
-<li>启动一个socket服务，命令为<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lk 9000</span><br></pre></td></tr></table></figure>
+<p>源码位置在flink 项目中，可以单独去git 上下载，git 地址，参考上一篇文章<br>link-examples_flink-examples-streaming_src_main_java_org_apache_flink_streaming_examples_socket/SocketWindowWordCount.java<br>启动一个socket服务，命令为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lk 9000</span><br></pre></td></tr></table></figure>
 
-</li>
-</ol>
 <p>在Linux界面输入</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">mac nc </span><br><span class="line">--------------------------------------------------------------</span><br><span class="line">DESCRIPTION</span><br><span class="line">     The nc (or netcat) utility(功能) is used for just about anything under the sun involving TCP or UDP.  It can</span><br><span class="line">     open TCP connections, send UDP packets, listen on arbitrary（任意的） TCP and UDP ports, do port scanning, and</span><br><span class="line">     deal with both IPv4 and IPv6.  Unlike telnet(1), nc scripts nicely, and separates error messages onto</span><br><span class="line">     standard error instead of sending them to standard output, as telnet(1) does with some.</span><br><span class="line">个人理解：nc打开tcp连接。发送udp包，监听任意的tcp和udp端口，扫描端口。</span><br><span class="line">--------------------------------------------------------------</span><br><span class="line">     -k      Forces nc to stay listening for another connection after its current connection is completed.</span><br><span class="line">             It is an error to use this option without the -l option.</span><br><span class="line"></span><br><span class="line">     -l      Used to specify that nc should listen for an incoming connection rather than initiate a connec-</span><br><span class="line">             tion to a remote host.  It is an error to use this option in conjunction with the -p, -s, or -z</span><br><span class="line">             options.  Additionally, any timeouts specified with the -w option are ignored.</span><br><span class="line"></span><br><span class="line">-l命令是启动一个监听，</span><br><span class="line">-k命令是强制监听其他连接。</span><br></pre></td></tr></table></figure>
 
