@@ -303,6 +303,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/wang.github.io/2019/07/22/sqoop安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/wang.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="word change world">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/wang.github.io/2019/07/22/sqoop安装/" class="post-title-link" itemprop="url">Untitled</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-22 12:54:10 / Modified: 12:54:19" itemprop="dateCreated datePublished" datetime="2019-07-22T12:54:10+08:00">2019-07-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="sqoop2-安装"><a href="#sqoop2-安装" class="headerlink" title="sqoop2 安装"></a>sqoop2 安装</h1><p>#大数据</p>
+<p>sqoop2<br>1 sqoop2 安装：<br> 01 下载地址，官方网站地址<br> <a href="https://www-eu.apache.org/dist/sqoop/1.99.7/" target="_blank" rel="noopener">https://www-eu.apache.org/dist/sqoop/1.99.7/</a><br>02  解压到指定的目录：<br>tar -xvf  sqoop-1.99.4-bin-hadoop200.tar.gz /soft 目录下<br>03  新建文件夹_soft_lib/sqoop2 目录，在里面添加mysql jdbc 驱动和postgresql 驱动<br>04 配置环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export SQOOP_HOME=/soft/sqoop-1.99.7-bin-hadoop200</span><br><span class="line">export PATH=$SQOOP_HOME/bin:$PATH</span><br><span class="line">export SQOOP_SERVER_EXTRA_LIB=/soft/lib/sqoop2</span><br></pre></td></tr></table></figure>
+
+<p>05 修改hadoop 配置。<br>进入hadoop 目录下的core-site.xml,添加如下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">  &lt;name&gt;hadoop.proxyuser.sqoop2.hosts&lt;/name&gt;</span><br><span class="line">  &lt;value&gt;*&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">  &lt;name&gt;hadoop.proxyuser.sqoop2.groups&lt;/name&gt;</span><br><span class="line">  &lt;value&gt;*&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<p>06 进入_soft_sqoop-1.99.7-bin-hadoop200/conf 之下，找到sqoop.properties文件，然后把下面一行改成hadoop的真实环境，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.apache.sqoop.submission.engine.mapreduce.configuration.directory=/soft/hadoop-2.6.0-cdh5.9.3/etc/hadoop/</span><br></pre></td></tr></table></figure>
+
+<p>07 执行sqoop2-tool verify 如果提示success finish 的字段，说明执行成功。<br>08 查看日志的目录</p>
+<p> cat <em>soft_sqoop-1.99.7-bin-hadoop200/conf</em>@LOGDIR@_sqoop.log</p>
+<hr>
+<p>遇到的坑：<br>1,99.4 版本跟1.99.7版本不一致，无论怎么改，都会报错，找不到类。最后换成1.99.7 问题解决。</p>
+<p>参考资料：<br><a href="https://blog.csdn.net/u012842205/article/details/52344196" target="_blank" rel="noopener">Sqoop1.99.7安装、配置和使用（一） - ez scope - CSDN博客</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/wang.github.io/2019/07/04/flink 源码解读之 SocketWindowWordCount/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -630,7 +787,7 @@
                 
                   <a href="/wang.github.io/archives/">
                 
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
