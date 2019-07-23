@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="word change world">
 <meta property="og:description" content="01 启动服务端程序 1sqoop2-server start  02 客户端启动 123456#启动客户端窗口命令sqoop2-shell#设置服务端地址以及端口号set server --host localhost --port 12000 --webapp sqoop#查看连接是否可用show version --all  03 创建连接 1234567891011121314151617">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-23T14:41:18.047Z">
+<meta property="og:updated_time" content="2019-07-23T14:48:19.166Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sqoop2 客户端从mysql导入数据到hdfs中">
 <meta name="twitter:description" content="01 启动服务端程序 1sqoop2-server start  02 客户端启动 123456#启动客户端窗口命令sqoop2-shell#设置服务端地址以及端口号set server --host localhost --port 12000 --webapp sqoop#查看连接是否可用show version --all  03 创建连接 1234567891011121314151617">
@@ -349,7 +349,7 @@
                 
               
 
-              <time title="Created: 2019-07-23 21:38:43 / Modified: 22:41:18" itemprop="dateCreated datePublished" datetime="2019-07-23T21:38:43+08:00">2019-07-23</time>
+              <time title="Created: 2019-07-23 21:38:43 / Modified: 22:48:19" itemprop="dateCreated datePublished" datetime="2019-07-23T21:38:43+08:00">2019-07-23</time>
             
 
             
@@ -410,8 +410,8 @@
 <p>01 root is not allowed to impersonate root<br>这个问题是用户权限的问题，去core-site.xml 修改为root即可。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">  &lt;name&gt;hadoop.proxyuser.root.hosts&lt;/name&gt;</span><br><span class="line">  &lt;value&gt;*&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">  &lt;name&gt;hadoop.proxyuser.root.groups&lt;/name&gt;</span><br><span class="line">  &lt;value&gt;*&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
 
-<p>注意，修改过之后发现还是报错，最后重启了一下hadoop集群，错误消失。<br>疑问：为什么要重启hadoop集群？<br>02 数据库拒绝连接<br>这类错误一般都是数据库的账号密码配置有误，重新修改即可。</p>
-
+<p>注意，修改过之后发现还是报错，最后重启了一下hadoop集群，错误消失。<br>疑问：为什么要重启hadoop集群？<br>02 数据库拒绝连接<br>这类错误一般都是数据库的账号密码配置有误，重新修改即可。<br>03 查看job历史记录，会卡顿，并报错<br>Exception has occurred during processing command<br>Exception: org.apache.sqoop.common.SqoopException Message: MAPREDUCE_0003:Can’t get RunningJob instance<br>解决办法：</p>
+<pre><code></code></pre>
       
     </div>
 
