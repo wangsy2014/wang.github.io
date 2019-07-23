@@ -303,6 +303,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/wang.github.io/2019/07/23/BlockingQueue介绍/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/wang.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="word change world">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/wang.github.io/2019/07/23/BlockingQueue介绍/" class="post-title-link" itemprop="url">Untitled</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-23 14:49:02 / Modified: 14:49:15" itemprop="dateCreated datePublished" datetime="2019-07-23T14:49:02+08:00">2019-07-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="java阻塞队列-BlockingQueue-实现"><a href="#java阻塞队列-BlockingQueue-实现" class="headerlink" title="java阻塞队列  BlockingQueue 实现"></a>java阻塞队列  BlockingQueue 实现</h1><p>#java</p>
+<p>java.util.concurrent.BlockingQueue是一个队列实现类。支持：<br>01 当从队列中获取或者移除元素的时候，如果队列为空则需要等待 ，直到队列不为空；同事要向队列添加元素的时候，如果队列无可用的空间，也需要等待。<br>02 BlockingQueue 类不需要接受null值，如果你试图将队列添加null，会报错NullPointerException.<br>03 队列是线程安全的。所有方法本身都是原子操作，使用并发控制内部锁或者其他形式。<br>04 blockingQueue这个接口是java集合架构的一部分，用于解决生产者消费者问题。在blockingQueue中我们不用担心生产者操作是否有可用的空间或者消费者操作是否有可用的对象这些问题，这些都会在它的实现类中进行修改。<br>java 提供了几个BlockingQueue的实现类，如：<br>ArrayBlockingQueue LinkedBlockingQueue PriorityBlockingQueue SynchronousQueue<br>下面代码，举例子生产者和消费者</p>
+<p>Message.java </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package com.testQueue;</span><br><span class="line"></span><br><span class="line">//**/</span><br><span class="line">/ */*@Author:*/wang/</span><br><span class="line">/ */*@Date:*/2019-07-23 12:35/</span><br><span class="line">/ */*@Version*/1.0/</span><br><span class="line">/ */*@Content*/producer产生的对象，普通的java类。/</span><br><span class="line">/ *//</span><br><span class="line">public class Message &#123;</span><br><span class="line">    private String msg;</span><br><span class="line"></span><br><span class="line">     public Message(String msg) &#123;</span><br><span class="line">        this.msg = msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getMsg() &#123;</span><br><span class="line">        return msg;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> Producer.java 这个类产生消息，并放在队列中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">package com.testQueue;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.BlockingQueue;</span><br><span class="line"></span><br><span class="line">//**/</span><br><span class="line">/ */*@Author:*/wang/</span><br><span class="line">/ */*@Date:*/2019-07-23 12:37/</span><br><span class="line">/ */*@Version*/1.0/</span><br><span class="line">/ *//</span><br><span class="line">public class Producer implements Runnable &#123;</span><br><span class="line">    private BlockingQueue&lt;Message&gt; queue;</span><br><span class="line"></span><br><span class="line">    public Producer(BlockingQueue&lt;Message&gt; queue) &#123;</span><br><span class="line">        this.queue = queue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        //生产消息</span><br><span class="line">        for (int i=0 ;i&lt; 100;i++)&#123;</span><br><span class="line">            Message message = new Message(&quot;---&quot;+i);</span><br><span class="line">            try &#123;</span><br><span class="line">                Thread.sleep(i);</span><br><span class="line">                queue.put(message);</span><br><span class="line">                System.out.println(&quot;produced &quot; +message.getMsg());</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        // 添加消息退出</span><br><span class="line">        Message message = new Message(&quot;exit&quot;);</span><br><span class="line">        try &#123;</span><br><span class="line">            queue.put(message);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Customer.java 这个类消费消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package com.testQueue;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.BlockingQueue;</span><br><span class="line"></span><br><span class="line">//**/</span><br><span class="line">/ */*@Author:*/wang/</span><br><span class="line">/ */*@Date:*/2019-07-23 12:41/</span><br><span class="line">/ */*@Version*/1.0/</span><br><span class="line">/ *//</span><br><span class="line">public class Customer implements Runnable &#123;</span><br><span class="line">    private BlockingQueue&lt;Message&gt; queue;</span><br><span class="line"></span><br><span class="line">    public Customer(BlockingQueue&lt;Message&gt; queue) &#123;</span><br><span class="line">        this.queue = queue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        Message message;</span><br><span class="line">        try &#123;</span><br><span class="line">            while ((message = queue.take()).getMsg() != &quot;exit&quot;)&#123;</span><br><span class="line">                Thread.sleep(10);</span><br><span class="line">                System.out.println(message.getMsg());</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;catch (InterruptedException err)&#123;</span><br><span class="line">            System.out.println(err);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ProducerConsumerService 生产者/消费者的服务类产生固定大小的BlockingQueue，生产者和消费者同时共享改BlockingQueue，该服务会启动生产者和消费者线程。<br>ProducerConsumerService.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">package com.testQueue;</span><br><span class="line"></span><br><span class="line">import org.springframework.cglib.core.internal.CustomizerRegistry;</span><br><span class="line"></span><br><span class="line">import java.util.Queue;</span><br><span class="line">import java.util.concurrent.ArrayBlockingQueue;</span><br><span class="line">import java.util.concurrent.BlockingQueue;</span><br><span class="line"></span><br><span class="line">//**/</span><br><span class="line">/ */*@Author:*/wang/</span><br><span class="line">/ */*@Date:*/2019-07-23 12:45/</span><br><span class="line">/ */*@Version*/1.0/</span><br><span class="line">/ *//</span><br><span class="line">public class ProduceCustomerService &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        BlockingQueue&lt;Message&gt; queue = new ArrayBlockingQueue&lt;&gt;(10);</span><br><span class="line">         //开启producer 向线程添加东西</span><br><span class="line">        Producer producer = new Producer(queue);</span><br><span class="line">        // 开启customer 向线程 队列消费东西</span><br><span class="line">        Customer customer = new Customer(queue);</span><br><span class="line">        new Thread(customer).start();</span><br><span class="line"></span><br><span class="line">        new Thread(producer).start();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/wang.github.io/2019/07/22/sqoop安装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -787,7 +943,7 @@
                 
                   <a href="/wang.github.io/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
